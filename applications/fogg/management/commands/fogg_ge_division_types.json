@@ -1,0 +1,92 @@
+[
+	{
+		"code": "autonomous_republic",
+		"name":
+		{
+			"en": "Autonomous Republic",
+			"ru": "Автономная республика",
+			"ka": "ავტონომიური რესპუბლიკა"
+		}
+	},
+	{
+		"code": "region",
+		"name":
+		{
+			"en": "Region",
+			"ru": "Регион",
+			"ka": "მხარე"
+		}
+	},
+	{
+		"code": "municipality",
+		"name":
+		{
+			"en": "Municipality",
+			"ru": "Муниципалитет",
+			"ka": "მუნიციპალიტეტი"
+		}
+	},
+	{
+		"code": "settlement",
+		"name":
+		{
+			"en": "Settlement",
+			"ru": "Населённый пункт",
+			"ka": "დასახლება"
+		}
+	},
+	{
+		"code": "city",
+		"name":
+		{
+			"en": "City",
+			"ru": "Город",
+			"ka": "ქალაქი"
+		}
+	},
+	{
+		"code": "daba",
+		"name":
+		{
+			"en": "Urban-type Settlement",
+			"ru": "Посёлок городского типа",
+			"ka": "დაბა"
+		}
+	},
+	{
+		"code": "temi",
+		"name":
+		{
+			"en": "Temi",
+			"ru": "Теми",
+			"ka": "თემი"
+		}
+	},
+	{
+		"code": "village",
+		"name":
+		{
+			"en": "Village",
+			"ru": "Деревня",
+			"ka": "სოფელი"
+		}
+	},
+	{
+		"code": "district",
+		"name":
+		{
+			"en": "District",
+			"ru": "Район",
+			"ka": "რაიონი"
+		}
+	},
+	{
+		"code": "street",
+		"name":
+		{
+			"en": "Street",
+			"ru": "Улица",
+			"ka": "ქუჩა"
+		}
+	}
+]
