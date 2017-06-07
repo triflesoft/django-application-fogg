@@ -19,28 +19,22 @@ class Command(BaseCommand):
 
         self._division_type_id = 26800000
         self._division_type_objects = []
-        self._division_type_name_objects = []
         self._division_type_map = {}
-
-        division_type_name_model = CountryDivisionType._meta._sazed_localization_models['name']
 
         for datum in self._division_type_data:
             self._division_type_id += 1
-            division_type = CountryDivisionType(id=self._division_type_id, country=self._country, code=datum['code'])
+            division_type = CountryDivisionType(
+                id=self._division_type_id,
+                country=self._country,
+                code=datum['code'],
+                _name_localizations=datum['name'])
             self._division_type_objects.append(division_type)
             self._division_type_map[datum['code']] = division_type
-
-            for language_code, value in datum['name'].items():
-                division_type_name = division_type_name_model(target=division_type, language_code=language_code, value=value)
-                self._division_type_name_objects.append(division_type_name)
 
     def _create_division_type_objects(self):
         from ...models import CountryDivisionType
 
-        division_type_name_model = CountryDivisionType._meta._sazed_localization_models['name']
-
         CountryDivisionType.objects.bulk_create(self._division_type_objects)
-        division_type_name_model.objects.bulk_create(self._division_type_name_objects)
 
     def _load_division_data(self, path):
         from json import load
@@ -49,7 +43,7 @@ class Command(BaseCommand):
         with open(path, 'r') as file:
             self._division_data = load(file, object_pairs_hook=OrderedDict)
 
-    def _parse_division_data_tree(self, name_model, parent, data):
+    def _parse_division_data_tree(self, parent, data):
         from ...models import CountryDivision
         from ...models import PostalZone
         from uuid import uuid4
@@ -79,38 +73,26 @@ class Command(BaseCommand):
                 latitude_max=0,
                 longitude_min=0,
                 longitude_max=0,
-                geoname_id=None)
+                geoname_id=None,
+                _name_localizations=datum['name'])
 
             self._division_objects.append(division)
 
-            for language_code, value in datum['name'].items():
-                division_name = name_model(target=division, language_code=language_code, value=value)
-                self._division_name_objects.append(division_name)
-
             if 'children' in datum:
-                self._parse_division_data_tree(name_model, division, datum['children'])
+                self._parse_division_data_tree(division, datum['children'])
 
     def _parse_division_data(self):
-        from ...models import CountryDivision
-
         self._division_id = 268000000
         self._division_objects = []
-        self._division_name_objects = []
         self._postal_zone_objects = {}
-
-        division_name_model = CountryDivision._meta._sazed_localization_models['name']
-
-        self._parse_division_data_tree(division_name_model, None, self._division_data)
+        self._parse_division_data_tree(None, self._division_data)
 
     def _create_division_objects(self):
         from ...models import CountryDivision
         from ...models import PostalZone
 
-        division_name_model = CountryDivision._meta._sazed_localization_models['name']
-
         PostalZone.objects.bulk_create(self._postal_zone_objects.values())
         CountryDivision.objects.bulk_create(self._division_objects)
-        division_name_model.objects.bulk_create(self._division_name_objects)
 
     def handle(self, *args, **options):
         from os.path import abspath
